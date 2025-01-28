@@ -18,7 +18,6 @@ class UserResource extends JsonResource
             'Full Name'=>$this->name,
             'E-mail'=>$this->email,
             'Lessons'=>LessonResource::collection($this->lessons),
-            'role',$this->role
            ];
     }
 }

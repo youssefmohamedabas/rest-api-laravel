@@ -7,12 +7,10 @@ use App\Http\Controllers\APi\V1\UserController;
 use App\Http\Controllers\Api\V1\LoginController;
 use App\Http\Controllers\APi\V1\RelationsController;
 use App\Http\Controllers\APi\V1\TagController;
-
-
-
+use App\Http\Controllers\EmailController;
 
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
-
+Route::post('/send-reminder-email', [EmailController::class, 'sendReminderEmail'])->name('user.mail');
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', function (Request $request) {

@@ -19,7 +19,7 @@ class LessonResource extends JsonResource
             'Author' => $this->user->name,
             'Title' => $this->title,
             'Content' => $this->body,
-            'Tags' => $this->tags->map(function ($tag)
+            'Tags' => $this->tags->map(function ($tag) // solve problem by map function
             {
                 return 
                 [
@@ -27,6 +27,7 @@ class LessonResource extends JsonResource
                     'pivot' => $tag->pivot,
                 ];
             }),    
+            // 'Tags'=>TagResource::collection($this->tags) ->will give Time execution Error
         ];
     }
 }
