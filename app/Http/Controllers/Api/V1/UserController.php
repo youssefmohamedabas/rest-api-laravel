@@ -38,16 +38,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check()) {
-            $this->authorize('create', User::class);
-        } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        // if (Auth::check()) {
+        //     $this->authorize('create', User::class);
+        // } else {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
         
-        if (User::where('email', $request->email)->exists())
-        {
-            return response()->json(['error' => 'Email already in use.'], 400);
-        }
+        // if (User::where('email', $request->email)->exists())
+        // {
+        //     return response()->json(['error' => 'Email already in use.'], 400);
+        // }
         $user = new UserResource(User::create([
             'name' => $request->name,
             'email' => $request->email,
