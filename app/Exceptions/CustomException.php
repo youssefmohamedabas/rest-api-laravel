@@ -12,8 +12,9 @@ class CustomException extends Exception
     public function render($request)
     {
         return response()->json([
-            'error' => 'Not Found',
+            'error' => 'Model Not Found',
             'message' => $this->getMessage(),
         ], 422);
     }
+    
 }

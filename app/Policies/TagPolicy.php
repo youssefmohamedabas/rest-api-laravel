@@ -20,7 +20,7 @@ class TagPolicy
      * @param \App\Models\User $user
      * @return bool
      */
-    public function modifyTags(User $user,Tag $tag)
+    public function modifyTags(User $user)
     {
         return $user->isAdmin(); 
     }

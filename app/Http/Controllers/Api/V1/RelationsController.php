@@ -9,7 +9,11 @@ use App\Http\Resources\TagResource;
 use App\Models\Lesson;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Response;
+use App\Exceptions\CustomException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 class RelationsController extends Controller
 {
@@ -21,18 +25,24 @@ class RelationsController extends Controller
      */
     public function userLessons($id)
     {
-        $user = User::with('lessons')->findOrFail($id);
+        $user = User::with('lessons')->find($id);
+    
+        if (!$user) {
+            throw new NotFoundHttpException("User with ID {$id} not found");
+        }
+    
         $lessons = $user->lessons->map(function ($lesson) {
             return [
                 'Title' => $lesson->title,
                 'Content' => $lesson->body,
             ];
         });
-
-        return Response::json([
+    
+        return response()->json([
             'data' => $lessons,
         ], 200);
     }
+    
 
 
   /**

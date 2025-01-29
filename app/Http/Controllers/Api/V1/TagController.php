@@ -15,7 +15,7 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        return response()->json($tags, 200);
+        return response()->json(TagResource::collection($tags), 200);
     }
 
     /**
@@ -24,7 +24,7 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $this->authorize('modifyTags', Tag::class);
-        $tag = Tag::create($request->all());
+        $tag = new TagResource(Tag::create($request->all()));
         return response()->json([
             'message' => 'Tag created successfully',
             'tag' => $tag
@@ -36,7 +36,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        $tag = Tag::findOrFail($id);
+        $tag = new TagResource(Tag::findOrFail($id));
         return response()->json($tag, 200);
     }
 
@@ -50,7 +50,7 @@ class TagController extends Controller
         $tag->update($request->all());
         return response()->json([
             'message' => 'Tag updated successfully',
-            'tag' => $tag
+            'tag' =>new TagResource($tag)
         ], 200);
     }
 

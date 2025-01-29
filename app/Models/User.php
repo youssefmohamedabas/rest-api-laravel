@@ -26,7 +26,9 @@ class User extends Authenticatable
         'password',
         'role',
     ];
-
+    public function lessons(){
+        return $this->hasMany(Lesson::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -62,7 +64,5 @@ class User extends Authenticatable
         ];
     }
 
-    public function lessons(){
-        return $this->hasMany(Lesson::class);
-    }
+    
 }

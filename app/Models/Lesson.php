@@ -9,15 +9,15 @@ class Lesson extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'body', 'user_id',];
+    protected $fillable = ['title', 'body', 'user_id'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //select * from users where lesson_id==user_id
     }
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'lesson_tag');
+        return $this->belongsToMany(Tag::class,'lesson_tag');
     }
 }
