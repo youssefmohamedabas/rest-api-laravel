@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Console\Commands\SendEmail;
 use App\Exceptions\CustomException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -25,13 +26,17 @@ return Application::configure(basePath: dirname(__DIR__))
         
     })
     ->withExceptions(function (Exceptions $exceptions) {
-            
+        $exceptions->renderable(function (MethodNotAllowedHttpException $e) {
+            return response()->json([
+                'message' => 'Method is not true'
+            ], 405);
+        });  
         $exceptions->renderable(function (NotFoundHttpException $e) {
             return response()->json([
                 'message' => 'Record not found.'
             ], 404);
         });
-             
+        
     })->create();
     
      

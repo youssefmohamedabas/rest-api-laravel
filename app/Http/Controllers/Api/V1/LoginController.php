@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Events\UserLoggedIn;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -29,6 +29,7 @@ class LoginController extends Controller
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
         $user = Auth::user();
         
+        event(new UserLoggedIn($user));
         // Create a personal access token for the user (Sanctum)
         $accessToken = $user->createToken('Access Token')->plainTextToken;
 

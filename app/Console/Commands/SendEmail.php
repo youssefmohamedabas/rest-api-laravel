@@ -21,7 +21,7 @@ class SendEmail extends Command
      *
      * @var string
      */
-    protected $description = 'Send an email every hour';
+    protected $description = 'Send an email every Minute';
 
     /**
      * Execute the console command.
@@ -30,7 +30,7 @@ class SendEmail extends Command
     {
         // Logic to send the email
         $user = User::first(); // Example: Send to the first user
-        Mail::to($user->email)->send(new ReminderEmail($user)); // Send the email
+        Mail::to($user->email)->send(new ReminderEmail ($user)); // Send the email
         
         $this->info('Email sent successfully!');
     }

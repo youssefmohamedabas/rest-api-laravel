@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 { 
     
+    public function __construct() {
+        $this->middleware('auth:sanctum')->except(['index','store']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +22,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('show', Auth::user());
         // Ensure the limit is not more than 50 or set it to 15 by default
         $limit = $request->input('limit') <= 50 ? $request->input('limit') : 15;
 
         // Paginate and wrap users in a resource collection
-        $users = UserResource::collection(User::paginate($limit));
+        $users = UserResource::collection(User::paginate(3));
 
         // Return users with a 200 HTTP status code
         return $users->response()->setStatusCode(200);
@@ -39,7 +41,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // if (Auth::check()) {
-        //     $this->authorize('create', User::class);
+        //   
         // } else {
         //     return response()->json(['error' => 'Unauthorized'], 401);
         // }
@@ -48,6 +50,7 @@ class UserController extends Controller
         // {
         //     return response()->json(['error' => 'Email already in use.'], 400);
         // }
+        $this->authorize('create', User::class);
         $user = new UserResource(User::create([
             'name' => $request->name,
             'email' => $request->email,

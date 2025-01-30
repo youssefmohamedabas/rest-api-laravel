@@ -12,7 +12,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Response;
 use App\Exceptions\CustomException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class RelationsController extends Controller
@@ -25,11 +24,11 @@ class RelationsController extends Controller
      */
     public function userLessons($id)
     {
-        $user = User::with('lessons')->find($id);
+        $user = User::with('lessons')->findOrFail($id);
     
-        if (!$user) {
-            throw new NotFoundHttpException("User with ID {$id} not found");
-        }
+        // if (!$user) {
+        //     throw new CustomException("User with ID {$id} not found");
+        // }
     
         $lessons = $user->lessons->map(function ($lesson) {
             return [

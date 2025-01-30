@@ -24,7 +24,7 @@ class LessonResource extends JsonResource
                 return 
                 [
                     'Tag' => $tag->name,
-                    'pivot' => $tag->pivot,
+                   
                 ];
             }),    
             // 'Tags'=>TagResource::collection($this->tags) ->will give Time execution Error
